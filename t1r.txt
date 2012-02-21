@@ -1,0 +1,31 @@
+#Perceptron
+
+#Pocet vstupu
+2
+#Popis vstupu
+vstup1 0 10
+vstup2 0 10
+
+#Koeficient uceni
+0.3
+
+#Trenovaci mnozina
+
+#Pocet prvku
+6
+#Jednotlive Prvky
+10 5 1
+4 8 0
+1 1 1
+6 9 0
+8 7 1
+4 10 0
+
+#Testovaci vstupy
+#pocet
+5
+7 9
+9 7
+2 2
+1 9
+10 1
