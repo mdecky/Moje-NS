@@ -16,7 +16,7 @@ public:
     std::string *popisVstupu;
     float *vahy;
     CPerceptron(const char *path);
-    ~CPerceptron(){ delete [] trenovaciMnozina; delete [] testovaciVstupy; delete [] vahy; }
+    ~CPerceptron();
     int loadFromFile();
     void initVahy();
     void test();

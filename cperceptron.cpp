@@ -5,12 +5,14 @@ CPerceptron::CPerceptron()
 {
 
 }
-void CPerceptron::test(){
-    int pocetPrvku = 3;
-    std::string line;
-    for(int i = 0; i< pocetPrvku; ++i){
-        line.append("%f ");
-    }
+CPerceptron::~CPerceptron()
+{
+    delete [] trenovaciMnozina;
+    delete [] testovaciVstupy;
+    delete [] vahy;
+    delete [] minHod;
+    delete [] maxHod;
+    delete [] popisVstupu;
 }
 int CPerceptron::loadFromFile(const char *path)
 {
