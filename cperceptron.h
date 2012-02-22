@@ -25,8 +25,6 @@ private:
     float koeficietUceni;
     int pocetTrenPrvku;
     int pocetTestVstupu;
-    float *minHod;
-    float *maxHod;
     CPrvek *trenovaciMnozina;
     CPrvek *testovaciVstupy;
     void skipLines(char*);

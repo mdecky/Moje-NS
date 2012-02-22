@@ -23,10 +23,6 @@ int CPerceptron::loadFromFile()
       //error
     }
     skipLines(str);
-    minHod = new float[this->pocetVstupu + 1];
-    maxHod = new float[this->pocetVstupu + 1];
-    minHod[0] = 0;
-    maxHod[0] = 1;
     for (int i = 1; i < pocetVstupu; ++i) {
         getline(file,line);
     }
@@ -48,12 +44,10 @@ int CPerceptron::loadFromFile()
     skipLines(str);
     //nacteni testovani mnoziny
     char * tmp;
-    float fpom;
     tmp = strtok(str, " ");
     for (int i = 0; i < this->pocetTrenPrvku; ++i){
-        for (int j = 1; j < this->pocetVstupu + 1; ++j){
-            sscanf(tmp, "%f", &fpom);
-            trenovaciMnozina[i].poleVstupu[j] = (fpom - minHod[j])/(maxHod[j]-minHod[j]);
+        for (int j = 0; j < this->pocetVstupu; ++j){
+            sscanf(tmp, "%f", &trenovaciMnozina[i].poleVstupu[j]);
             tmp = strtok(NULL, " ");
         }
         sscanf(tmp, "%d", &trenovaciMnozina[i].vystup);
@@ -96,7 +90,7 @@ void CPerceptron::skipLines(char *c)
 void CPerceptron::initVahy()
 {
     srand((unsigned)time(0));
-    vahy = new float[pocetVstupu + 1];
+    vahy = new float[pocetVstupu];
     for (int i = 0; i < pocetVstupu; ++i) {
         vahy[i] = (float)rand()/(float)RAND_MAX;
 
