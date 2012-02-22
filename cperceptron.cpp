@@ -1,9 +1,8 @@
 #include "cperceptron.h"
 #include <stdio.h>
 
-CPerceptron::CPerceptron(const char *path)
+CPerceptron::CPerceptron()
 {
-    this->file.open(path);
 
 }
 void CPerceptron::test(){
@@ -13,18 +12,36 @@ void CPerceptron::test(){
         line.append("%f ");
     }
 }
-int CPerceptron::loadFromFile()
+int CPerceptron::loadFromFile(const char *path)
 {
     char str[200];
-    std::string line;
+    this->file.open(path);
     skipLines(str);
     if(EOF == sscanf(str, "%d", &this->pocetVstupu))
     {
       //error
     }
     skipLines(str);
-    for (int i = 1; i < pocetVstupu; ++i) {
-        getline(file,line);
+    minHod = new float[this->pocetVstupu + 1];
+    maxHod = new float[this->pocetVstupu + 1];
+    popisVstupu = new std::string[this->pocetVstupu + 1];
+    popisVstupu[0].append("Vstup s vahou theta");
+    minHod[0] = 0;
+    maxHod[0] = 1;
+    tmp = strtok(str, " ");
+    popisVstupu[1].append(tmp);
+    tmp = strtok(NULL, " ");
+    sscanf(tmp, "%f", minHod[1]);
+    tmp = strtok(NULL, " ");
+    sscanf(tmp, "%f", maxHod[1]);
+    for (int i = 2; i < pocetVstupu; ++i) {
+        skipLines(str);
+        tmp = strtok(str, " ");
+        popisVstupu[1].append(tmp);
+        tmp = strtok(NULL, " ");
+        sscanf(tmp, "%f", minHod[i]);
+        tmp = strtok(NULL, " ");
+        sscanf(tmp, "%f", maxHod[i]);
     }
     initVahy();
     skipLines(str);
@@ -98,9 +115,32 @@ void CPerceptron::initVahy()
 }
 void CPerceptron::teach(int pocetCyklu)
 {
+    int ys;
+    float yspom = 0;
+    bool teached = true;
     for (int i = 0; i < pocetCyklu; ++i) {
         for (int j = 0; j < pocetTrenPrvku; ++j) {
+            for (int k = 0; k < pocetVstupu + 1; ++k) {
+                yspom += vahy[k]*trenovaciMnozina[j].poleVstupu[k];
+            }
+            ys = sgn(yspom);
+            if(trenovaciMnozina[j]!=ys){
+                teached = false;
+                for (int k = 0; k < pocetVstupu + 1; ++k) {
+                    vahy[k] += (trenovaciMnozina[j].vystup - ys)*trenovaciMnozina[j].poleVstupu[k]*koeficietUceni;
 
+                }
+            }
+            teached &= teached;
+            ys = 0;
         }
+        if(teached)
+            return;
+        teached = false;
     }
 }
+template <typename T> int sgn(T val)
+{
+    return (val > T(0)) - (val < T(0));
+}
+

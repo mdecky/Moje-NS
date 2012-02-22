@@ -13,6 +13,7 @@ class CPerceptron
 {
 public:
     std::ifstream file;
+    std::string *popisVstupu;
     float *vahy;
     CPerceptron(const char *path);
     ~CPerceptron(){ delete [] trenovaciMnozina; delete [] testovaciVstupy; delete [] vahy; }
@@ -25,9 +26,12 @@ private:
     float koeficietUceni;
     int pocetTrenPrvku;
     int pocetTestVstupu;
+    float *minHod;
+    float *maxHod;
     CPrvek *trenovaciMnozina;
     CPrvek *testovaciVstupy;
     void skipLines(char*);
+    template <typename T> int sgn(T val);
 
 };
 
